@@ -1,0 +1,40 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.logo{
+    width: 120px;
+    height: 120px;
+    margin-left: 20px;
+}
+.nav{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 8%;
+    
+}
+.nav-link{
+    margin-right: 25px;
+}
+.nav-link a{
+    text-decoration: none;
+    color: white;
+    margin-right: 30px;
+    font-size: 15px; 
+    
+}
+.hero video{
+    width: 100%;
+}
+.nav-link a:hover{
+    color: rgb(230, 143, 4);
+}
+
+

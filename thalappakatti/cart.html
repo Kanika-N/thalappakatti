@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dindigul Thalappakatti</title>
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="footer.css">
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="newstyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <script src="https://kit.fontawesome.com/78d13b8fa3.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="nav">
+        <div class="nav-link">
+            <a href="home.html">HOME</a>
+            <a href="about.html">ABOUT US</a>
+            <a href="product.html">MENU</a>
+            <a href="orderonline.html">ORDER ONLINE</a>
+            <a href="cart.html">CART</a>
+            <a href="payment.html">PAYMENT</a>
+            <a href="login.php">LOGIN</a>
+        </div>
+    </div>
+    <div id="navbar">
+        <img src="logo-thalappakatti.gif" style="height: 110px;width: 110px;margin-top: 10px;margin-left: 120px;" >
+        <h2 class="h1" style="margin-left: 230px;margin-top: -70px;">Dindigul Thalappakatti</h2>
+    </div>
+    <div id="container1">
+        <h1 class="word">CART : <span id="cartItemCount"></span> ITEM(S)</h1> <!-- Updated line -->
+        <br>
+        <div id="cart">
+            <div>
+                <div id="cartItemTitle">
+                    <p>ITEM(S)</p>
+                    <p>QUANTITY</p>
+                    <p>TOTAL</p>
+                </div>
+                <div id="productContainer">
+                    <div id="showProduct"></div>
+                </div>
+            </div>
+            <div id="summary">
+                <h1>ORDER SUMMARY</h1>
+                <p>Enter Voucher Code</p>
+                <input type="text" id="inputVoucher">
+                <button id="btnVoucher">APPLY</button>
+                <p>Order Total</p>
+                <h2 id="sumTotal"></h2>
+                <p>Shipping</p>
+                <h2>FREE</h2>
+                <p>Discount</p>
+                <h2 id="sumDiscount"></h2>
+                <h3>You Pay</h3>
+                <h2 id="SumPay"></h2>
+                <h3>Inclusive of all taxes*</h3>
+                <h3 id="red">You Save</h3>
+                <h2 id="saving"></h2>
+                <button id="btnCheckout" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        import {navbar} from './components/navbar.js';
+        import {footer} from './components/footer.js';
+        let N = document.getElementById("navbar");
+        N.innerHTML = navbar();
+        let F = document.getElementById("footer");
+        F.innerHTML = footer();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            let cartItemCount = document.getElementById("cartItemCount"); // Updated line
+            cartItemCount.innerText = cart.length; // Updated line
+
+            const showProduct = document.getElementById("showProduct");
+            showProduct.innerHTML = "";
+
+            cart.forEach((elem, index) => {
+                const div = document.createElement("div");
+
+                const image = document.createElement("img");
+                image.src = elem.image;
+                image.alt = elem.title;
+
+                const title = document.createElement("h3");
+                title.setAttribute("id", "title");
+                title.innerText = elem.title;
+
+                const price = document.createElement("h3");
+                price.setAttribute("id", "price");
+                price.innerText = `₹${elem.price}`; // Updated line
+
+                const qty = document.createElement("input");
+                qty.setAttribute("id", "qty");
+                qty.value = 1;
+                qty.type = "number";
+                qty.min = 1;
+                qty.addEventListener("change", () => updateTotal(price, qty, total));
+
+                const total = document.createElement("h3");
+                total.setAttribute("id", "total");
+                total.innerText = `₹${elem.price}`; // Updated line
+
+                const removeButton = document.createElement("button");
+                removeButton.innerText = "Remove";
+                removeButton.addEventListener("click", () => removeFromCart(index));
+
+                const div2 = document.createElement("div");
+                div2.append(title, price, qty, total, removeButton);
+
+                div.append(image, div2);
+                showProduct.append(div);
+            });
+
+            function updateTotal(priceElement, qtyElement, totalElement) {
+                const price = parseFloat(priceElement.innerText.replace('₹', ''));
+                const qty = parseInt(qtyElement.value);
+                totalElement.innerText = `₹${(price * qty).toFixed(2)}`; // Updated line
+                updateSummary();
+            }
+
+            function removeFromCart(index) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                location.reload(); // Reload the page to reflect changes
+            }
+
+            function updateSummary() {
+                let sumTotal = 0;
+                let sumDiscount = 0;
+
+                cart.forEach((elem) => {
+                    const price = parseFloat(elem.price);
+                    sumTotal += price;
+                });
+
+                document.getElementById("sumTotal").innerText = `₹${sumTotal}`; // Updated line
+                document.getElementById("SumPay").innerText = `₹${sumTotal - sumDiscount}`; // Updated line
+                document.getElementById("saving").innerText = `₹${sumDiscount}`; // Updated line
+                document.getElementById("sumDiscount").innerText = `₹${sumDiscount}`; // Updated line
+            }
+
+            updateSummary();
+        });
+
+        function checkout() {
+            window.location.href = "payment.html";
+        }
+    </script>
+</body>
+</html>

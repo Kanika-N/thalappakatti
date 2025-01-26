@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>thalappakatti</title>
+    <link rel="stylesheet" href="product.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="nav-link">
+            <a href="home.html">HOME</a>
+            <a href="about.html">ABOUT US</a>
+            <a href="product.html">MENU</a>
+            <a href="orderonline.html">ORDER ONLINE</a>
+            <a href="cart.html">CART</a>
+            <a href="payment.html">PAYMENT</a>
+            <a href="login.php">LOGIN</a>
+        </div>
+    </div>
+    <div id="navbar">
+        <img src="logo-thalappakatti.gif" style="height: 110px;width: 110px;margin-top: 10px;margin-left: 120px;" >
+        <h2 class="h1" style="margin-left: 230px;margin-top: -70px;">Dindigul Thalappakatti</h2>
+    </div>
+    <!-- Products -->
+    <div class="container">
+        <div class="footer-separator"></div>
+        <div class="product-grid">
+            <!-- Product 1 -->
+            <div class="product-card" id="product-1">
+                <img src="soup.jpg" alt="soup">
+                <h2>Mutton Soup</h2>
+                <p>Price: ₹150</p>
+                <p>Rating: ★★★★☆</p>
+                <button class="add-to-cart" data-id="1" data-title="Mutton Soup" data-price="150" data-image="soup.jpg">Add to Cart</button>
+            </div>
+            <!-- Product 2 -->
+            <div class="product-card" id="product-2">
+                <img src="starters.jpeg" alt="Starters/Appetizers">
+                <h2>Kuchi Mutton</h2>
+                <p>Price: ₹295</p>
+                <p>Rating: ★★★★★</p>
+                <button class="add-to-cart" data-id="2" data-title="Kuchi Mutton" data-price="295" data-image="starters.jpeg">Add to Cart</button>
+            </div>
+            <!-- Product 3 -->
+            <div class="product-card" id="product-3">
+                <img src="biriyani.jpg" alt="Mutton Biriyani">
+                <h2>Mutton Biriyani</h2>
+                <p>Price: ₹545</p>
+                <p>Rating: ★★★★☆</p>
+                <button class="add-to-cart" data-id="3" data-title="Mutton Biriyani" data-price="545" data-image="biriyani.jpg">Add to Cart</button>
+            </div>
+            <!-- Product 4 -->
+            <div class="product-card" id="product-4">
+                <img src="curries.jpg" alt="Chettinadu Gravy">
+                <h2>Chettinadu Gravy</h2>
+                <p>Price: ₹320</p>
+                <p>Rating: ★★★★☆</p>
+                <button class="add-to-cart" data-id="4" data-title="Chettinadu Gravy" data-price="320" data-image="curries.jpg">Add to Cart</button>
+            </div>
+            <!-- Product 5 -->
+            <div class="product-card" id="product-5">
+                <img src="desserts.jpg" alt="Royal Falooda">
+                <h2>Royal Falooda</h2>
+                <p>Price: ₹200</p>
+                <p>Rating: ★★★☆☆</p>
+                <button class="add-to-cart" data-id="5" data-title="Royal Falooda" data-price="200" data-image="desserts.jpg">Add to Cart</button>
+            </div>
+            <!-- Product 6 -->
+            <div class="product-card" id="product-6">
+                <img src="beverages.jpg" alt="Coca Cola">
+                <h2>Coca Cola</h2>
+                <p>Price: ₹110</p>
+                <p>Rating: ★★★★★</p>
+                <button class="add-to-cart" data-id="6" data-title="Coca Cola" data-price="110" data-image="beverages.jpg">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+    <!----script-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const title = button.getAttribute('data-title');
+                    const price = button.getAttribute('data-price');
+                    const image = button.getAttribute('data-image');
+    
+                    const product = { id, title, price, image };
+                    cart.push(product);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+    
+                    alert(`${title} has been added to your cart.`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
